@@ -1,3 +1,12 @@
+import {
+  Box,
+  Button,
+  Container,
+  Divider,
+  Grid,
+  Input,
+  Typography,
+} from "@mui/material";
 import React, { useState } from "react";
 
 const Display = () => {
@@ -36,44 +45,83 @@ const Display = () => {
     setUnique(uniqueInAB);
   };
 
+  const style = {
+    marginLeft: "10px",
+  };
+
   return (
-    <div>
-      <input type="text" onChange={saveInputA} />
-      <button onClick={addAItem}>Add Item</button>
-      <input type="text" onChange={saveInputB} />
-      <button onClick={addBItem}>Add B Item</button>
+    <Container sx={{ mt: 5, mb: 5 }}>
+      <Box sx={{ mb: 5, border: "5px solid #f2f2f2" }}>
+        <Typography align="center" sx={{ fontSize: "2em", fontWeight: "bold" }}>
+          Differences between two lists A & B
+        </Typography>
+      </Box>
+      <Box sx={{ border: "5px solid #f2f2f2",pb: 5 }}>
+        <Grid container spacing={3} sx={{ mt: 2 }} align="center">
+          <Grid item md={6}>
+            <Input onChange={saveInputA} />
+            <Button sx={{ ml: 2 }} onClick={addAItem} variant="outlined">
+              Add A Item
+            </Button>
+          </Grid>
 
-      <div>
-      <div>
-      <button onClick={handleCompute}>Compute</button>
-      </div>
+          <Grid item md={6}>
+            <Input onChange={saveInputB} />
+            <Button sx={{ ml: 2 }} onClick={addBItem} variant="outlined">
+              Add B Item
+            </Button>
+          </Grid>
+        </Grid>
 
-        Items present only in A:
-        {listA.arrayA.map((subItems) => (
-          <> {subItems}, </>
-        ))}
-      </div>
-      <div>
-        Items present only in A:
-        {listB.arrayB.map((bItem) => (
-          <> {bItem}, </>
-        ))}
-      </div>
+        <Box>
+          <Button
+            sx={{ mb: 1, ml: "45%" }}
+            variant="outlined"
+            color="success"
+            onClick={handleCompute}
+          >
+            Compute
+          </Button>
+        </Box>
 
-      <div>
-        Items present in both A and B:
-        {presentBoth.map((bothPresent) => (
-          <> {bothPresent}, </>
-        ))}
-      </div>
+        <Box sx={style}>
+          <Typography variant="h5" align="left">
+            Items present only in A:
+          </Typography>
+          {listA.arrayA.map((subItems) => (
+            <> {subItems}, </>
+          ))}
+        </Box>
+        <Divider />
+        <Box sx={style}>
+          <Typography variant="h5" align="left">
+            Items present only in B:
+          </Typography>
 
-      <div>
-        Items combining both A and B (unique):
-        {unique.map((uniqueAB) => (
-          <> {uniqueAB}, </>
-        ))}
-      </div>
-    </div>
+          {listB.arrayB.map((bItem) => (
+            <> {bItem}, </>
+          ))}
+        </Box>
+        <Divider />
+        <Box sx={style}>
+          <Typography variant="h5" align="left">
+            Items present in both A and B:
+          </Typography>
+          {presentBoth.map((bothPresent) => (
+            <> {bothPresent}, </>
+          ))}
+        </Box>
+        <Divider />
+        <Box sx={style}>
+          <Typography variant="h5" align="left">
+            Items combining both A and B (unique):
+          </Typography>
+          {unique.map((uniqueAB) => (
+            <> {uniqueAB}, </>
+          ))}
+        </Box>
+      </Box>
+    </Container>
   );
 };
 
