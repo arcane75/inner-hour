@@ -35,10 +35,19 @@ const Display = () => {
   // console.log(intersection, difference);
   const [presentBoth, setPresentBoth] = useState([]);
   const [unique, setUnique] = useState([]);
+  const [onlyInA, setOnlyInA] = useState([]);
+  const [onlyInB, setOnlyInB] = useState([]);
 
   const handleCompute = () => {
+    let onlyInA = listA.arrayA.filter((x) => !listB.arrayB.includes(x));
+    setOnlyInA(onlyInA);
+
+    let onlyInB = listB.arrayB.filter((x) => !listA.arrayA.includes(x));
+    setOnlyInB(onlyInB);
+
     let presentInBoth = listA.arrayA.filter((x) => listB.arrayB.includes(x));
     setPresentBoth(presentInBoth);
+
     let uniqueInAB = listA.arrayA
       .filter((x) => !listB.arrayB.includes(x))
       .concat(listB.arrayB.filter((x) => !listA.arrayA.includes(x)));
@@ -56,7 +65,7 @@ const Display = () => {
           Differences between two lists A & B
         </Typography>
       </Box>
-      <Box sx={{ border: "5px solid #f2f2f2",pb: 5 }}>
+      <Box sx={{ border: "5px solid #f2f2f2", pb: 5 }}>
         <Grid container spacing={3} sx={{ mt: 2 }} align="center">
           <Grid item md={6}>
             <Input onChange={saveInputA} />
@@ -86,7 +95,7 @@ const Display = () => {
 
         <Box sx={style}>
           <Typography variant="h5" align="left">
-            Items present only in A:
+            Items present in A:
           </Typography>
           {listA.arrayA.map((subItems) => (
             <> {subItems}, </>
@@ -95,7 +104,7 @@ const Display = () => {
         <Divider />
         <Box sx={style}>
           <Typography variant="h5" align="left">
-            Items present only in B:
+            Items present in B:
           </Typography>
 
           {listB.arrayB.map((bItem) => (
@@ -103,6 +112,27 @@ const Display = () => {
           ))}
         </Box>
         <Divider />
+
+        <Box sx={style}>
+          <Typography variant="h5" align="left">
+            Items present Only in A:
+          </Typography>
+          {onlyInA.map((onlyA) => (
+            <> {onlyA}, </>
+          ))}
+        </Box>
+        <Divider />
+
+        <Box sx={style}>
+          <Typography variant="h5" align="left">
+            Items present Only in B:
+          </Typography>
+          {onlyInB.map((onlyB) => (
+            <> {onlyB}, </>
+          ))}
+        </Box>
+        <Divider />
+
         <Box sx={style}>
           <Typography variant="h5" align="left">
             Items present in both A and B:

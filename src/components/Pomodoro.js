@@ -1,5 +1,14 @@
 import React, { useEffect, useState } from "react";
-import "./Pomodoro.css";
+import {
+  Box,
+  Button,
+  Container,
+  Grid,
+  Typography,
+  Menu,
+  MenuItem,
+} from "@mui/material";
+// import "./Pomodoro.css";
 
 const Pomodoro = () => {
   const [breakLength, setBreakLength] = useState(5);
@@ -54,8 +63,8 @@ const Pomodoro = () => {
     setTwoCycles(0);
     setThreeCycles(0);
     setThreeCyclesBreak(0);
-    setBreakLength(1);
-    setSessionLength(1);
+    setBreakLength(5);
+    setSessionLength(25);
     setTimingtype("SESSION");
   };
 
@@ -108,71 +117,152 @@ const Pomodoro = () => {
 
   const title = timingType === "SESSION" ? "Session" : "Break";
 
+  const textStyle = {
+    fontWeight: "bold",
+    fontSize: "2em",
+    mt: 1,
+  };
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
-    <div>
-      <div className="wrapper">
-        <h2>25 + 5 Clock</h2>
-        <div className="break-session-length">
-          <div>
-            <h3 id="break-label">Break Length</h3>
-            <div>
-              <button
-                disabled={play}
-                onClick={handleBreakIncrease}
-                id="break-increment"
-              >
-                Increase
-              </button>
-              <strong id="break-length">{breakLength} minute</strong>
-              <button
-                disabled={play}
-                onClick={handleBreakDecrease}
-                id="break-decrement"
-              >
-                Decrease
-              </button>
-            </div>
-          </div>
-          <div>
-            <h3 id="session-label">Session Length</h3>
-            <div>
-              <button
-                disabled={play}
-                onClick={handleSessionIncrease}
-                id="session-increment"
-              >
-                Increase
-              </button>
-              <strong id="session-length">{sessionLength} minute</strong>
-              <button
-                disabled={play}
-                onClick={handleSessionDecrease}
-                id="session-decrement"
-              >
-                Decrease
-              </button>
-            </div>
-          </div>
-        </div>
-        <div className="timer-wrapper">
-          <div className="timer">
-            <h2 id="timer-label">{title}</h2>
-            <h3 id="time-left">{timeFormatter()}</h3>
-          </div>
-          <div className="dropdown">
-            <button className="dropbtn">Start</button>
-            <div className="dropdown-content">
-              <button onClick={handlePlay}>Start/Stop</button>
-              <button onClick={handlePlay}>2 Cycles</button>
-              <button onClick={handlePlay}>3 Cycles</button>
-            </div>
-          </div>
-          <button onClick={handleReset} id="reset">
-            Reset
-          </button>
-        </div>
-      </div>
-    </div>
+    <Container sx={{ mb: 5 }}>
+      <Box>
+        <Box sx={{ mb: 5, border: "5px solid #f2f2f2" }}>
+          <Typography sx={textStyle} align="center">
+            25 + 5 Pomodoro Clock
+          </Typography>
+        </Box>
+
+        <Box sx={{ border: "5px solid #f2f2f2", pb: 5, pl: 2 }}>
+          <Grid container spacing={3}>
+            <Grid item md={6}>
+              <Box>
+                <Typography sx={textStyle} align="center">
+                  Break Length
+                </Typography>
+
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    mt: 2,
+                  }}
+                >
+                  <Button
+                    disabled={play}
+                    onClick={handleBreakIncrease}
+                    variant="outlined"
+                    sx={{ mr: 1 }}
+                  >
+                    Increase
+                  </Button>
+                  <strong>{breakLength} minute </strong>
+                  <Button
+                    disabled={play}
+                    onClick={handleBreakDecrease}
+                    variant="outlined"
+                    sx={{ ml: 1 }}
+                  >
+                    Decrease
+                  </Button>
+                </Box>
+              </Box>
+            </Grid>
+            <Grid item md={6}>
+              <Box>
+                <Typography sx={textStyle} align="center">
+                  Session Length
+                </Typography>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    mt: 2,
+                  }}
+                >
+                  <Button
+                    disabled={play}
+                    onClick={handleSessionIncrease}
+                    variant="outlined"
+                    sx={{ mr: 1 }}
+                  >
+                    Increase
+                  </Button>
+                  <strong> {sessionLength} minute </strong>
+                  <Button
+                    disabled={play}
+                    onClick={handleSessionDecrease}
+                    variant="outlined"
+                    sx={{ ml: 1 }}
+                  >
+                    Decrease
+                  </Button>
+                </Box>
+              </Box>
+            </Grid>
+          </Grid>
+
+          <Box
+            sx={{
+              border: "3px solid #6E6E6E",
+              borderRadius: "10px",
+              margin: "20px 120px",
+            }}
+          >
+            <Typography sx={textStyle} align="center">
+              {title}
+            </Typography>
+            <Typography sx={textStyle} align="center">
+              {timeFormatter()}
+            </Typography>
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Button
+              aria-controls={open ? "basic-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+              onClick={handleClick}
+              variant="outlined"
+              sx={{mr: 2}}
+            >
+              Select Clock
+            </Button>
+            <Menu
+              id="basic-menu"
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              MenuListProps={{
+                "aria-labelledby": "basic-button",
+              }}
+            >
+              <MenuItem onClick={handlePlay}>Start/Stop</MenuItem>
+              <MenuItem onClick={handlePlay}>2 Cycles</MenuItem>
+              <MenuItem onClick={handlePlay}>3 Cycles</MenuItem>
+            </Menu>
+
+            <Button onClick={handleReset} variant="outlined">
+              Reset
+            </Button>
+          </Box>
+        </Box>
+      </Box>
+    </Container>
   );
 };
 
