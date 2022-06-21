@@ -82,9 +82,16 @@ const Display = () => {
           </Grid>
         </Grid>
 
-        <Box>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            mt: 2,
+          }}
+        >
           <Button
-            sx={{ mb: 1, ml: "45%" }}
+            sx={{ mb: 2, mt: 1 }}
             variant="outlined"
             color="success"
             onClick={handleCompute}

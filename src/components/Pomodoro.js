@@ -215,7 +215,7 @@ const Pomodoro = () => {
             sx={{
               border: "3px solid #6E6E6E",
               borderRadius: "10px",
-              margin: "20px 120px",
+              margin: "20px 80px",
             }}
           >
             <Typography sx={textStyle} align="center">
